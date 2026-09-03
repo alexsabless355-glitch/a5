@@ -63,34 +63,34 @@ img { max-width: 100%; height: auto; display: block; }
 .atelier-badge-live { display: flex; align-items: center; gap: 0.5rem; }
 .atelier-dot-ping { width: 6px; height: 6px; border-radius: 50%; background: var(--gold-primary); box-shadow: 0 0 8px var(--gold-primary); }
 
-.couture-header { position: sticky; top: 0; background: rgba(10, 10, 12, 0.94); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid var(--gold-border); z-index: 1000; padding: 1.1rem 0; transition: var(--transition); }
+.couture-header { position: sticky; top: 0; background: rgba(10, 10, 12, 0.94); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid var(--gold-border); z-index: 1000; padding: 0.9rem 0; transition: var(--transition); }
 body.theme-atelier-light .couture-header { background: rgba(251, 249, 245, 0.96); }
-.header-flex-nav { display: flex; justify-content: space-between; align-items: center; }
+.header-flex-nav { display: flex; justify-content: space-between; align-items: center; gap: 1.5rem; }
 
-.brand-atelier-link { display: flex; align-items: center; gap: 0.85rem; text-decoration: none; }
-.brand-crest-box { width: 44px; height: 44px; border: 1px solid var(--gold-border-bright); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; background: rgba(197, 168, 128, 0.08); color: var(--gold-light); }
-.brand-wordmark { display: flex; flex-direction: column; }
-.brand-title-couture { font-family: var(--font-luxury); font-size: 1.65rem; color: #ffffff; letter-spacing: 0.08em; line-height: 1; }
+.brand-atelier-link { display: flex; align-items: center; gap: 0.85rem; text-decoration: none; flex-shrink: 0; }
+.brand-crest-box { width: 42px; height: 42px; border: 1px solid var(--gold-border-bright); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; background: rgba(197, 168, 128, 0.08); color: var(--gold-light); flex-shrink: 0; }
+.brand-wordmark { display: flex; flex-direction: column; white-space: nowrap; }
+.brand-title-couture { font-family: var(--font-luxury); font-size: 1.6rem; color: #ffffff; letter-spacing: 0.08em; line-height: 1; white-space: nowrap; }
 body.theme-atelier-light .brand-title-couture { color: #1a1714; }
-.brand-subtitle-couture { font-family: var(--font-sans); font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.22em; color: var(--gold-primary); margin-top: 3px; }
+.brand-subtitle-couture { font-family: var(--font-sans); font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.22em; color: var(--gold-primary); margin-top: 3px; white-space: nowrap; }
 
-.couture-nav-menu { display: flex; align-items: center; gap: 2rem; list-style: none; }
-.couture-nav-link { font-size: 0.82rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.14em; color: var(--text-couture-soft); padding: 0.4rem 0; position: relative; }
+.couture-nav-menu { display: flex; align-items: center; gap: 1.75rem; list-style: none; margin: 0; padding: 0; }
+.couture-nav-link { font-size: 0.8rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.14em; color: var(--text-couture-soft); padding: 0.4rem 0; position: relative; white-space: nowrap; display: inline-block; }
 .couture-nav-link:hover, .couture-nav-link.active { color: var(--gold-light); }
-.couture-nav-link.active::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 1px; background: var(--gold-primary); }
+.couture-nav-link.active::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 1.5px; background: var(--gold-primary); }
 
-.header-action-cluster { display: flex; align-items: center; gap: 1rem; }
-.btn-theme-couture { background: transparent; border: 1px solid var(--gold-border); color: var(--gold-light); padding: 0.4rem 0.85rem; border-radius: var(--radius-sm); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.1em; cursor: pointer; transition: var(--transition); }
+.header-action-cluster { display: flex; align-items: center; gap: 0.75rem; flex-shrink: 0; }
+.btn-theme-couture { background: transparent; border: 1px solid var(--gold-border); color: var(--gold-light); padding: 0.55rem 0.95rem; border-radius: var(--radius-sm); font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.1em; cursor: pointer; transition: var(--transition); white-space: nowrap; font-family: var(--font-sans); font-weight: 600; }
 .btn-theme-couture:hover { border-color: var(--gold-primary); background: rgba(197, 168, 128, 0.1); }
 .mobile-toggle-couture { display: none; background: none; border: none; font-size: 1.5rem; color: var(--gold-light); cursor: pointer; }
 
-.btn-couture { display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem; padding: 0.85rem 2rem; font-size: 0.82rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.14em; border-radius: var(--radius-sm); cursor: pointer; transition: var(--transition); border: 1px solid transparent; font-family: var(--font-sans); }
+.btn-couture { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.6rem 1.4rem; font-size: 0.76rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.14em; border-radius: var(--radius-sm); cursor: pointer; transition: var(--transition); border: 1px solid transparent; font-family: var(--font-sans); white-space: nowrap; }
 .btn-gold-couture { background: var(--gold-gradient); color: #0a0a0c; box-shadow: var(--shadow-gold); }
 .btn-gold-couture:hover { transform: translateY(-2px); box-shadow: 0 14px 35px rgba(197, 168, 128, 0.3); color: #000000; }
 .btn-outline-gold { background: transparent; border: 1px solid var(--gold-border-bright); color: var(--gold-light); }
 .btn-outline-gold:hover { background: rgba(197, 168, 128, 0.1); border-color: var(--gold-light); color: #ffffff; }
 
-.badge-couture { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.3rem 0.85rem; border-radius: var(--radius-full); font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.15em; font-family: var(--font-sans); border: 1px solid var(--gold-border); background: rgba(197, 168, 128, 0.08); color: var(--gold-light); }
+.badge-couture { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.3rem 0.85rem; border-radius: var(--radius-full); font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.15em; font-family: var(--font-sans); border: 1px solid var(--gold-border); background: rgba(197, 168, 128, 0.08); color: var(--gold-light); white-space: nowrap; }
 
 .hero-atelier-section { padding: 5rem 0 6rem; background: radial-gradient(circle at 80% 20%, rgba(197, 168, 128, 0.08), transparent 65%); border-bottom: 1px solid var(--gold-border); }
 .hero-editorial-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 4.5rem; align-items: center; }
@@ -184,15 +184,15 @@ body.theme-atelier-light .brand-title-couture { color: #1a1714; }
 .footer-strip-couture { border-top: 1px solid var(--gold-border); padding-top: 2.25rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.82rem; flex-wrap: wrap; gap: 1.25rem; }
 .footer-strip-links { display: flex; gap: 1.5rem; }
 
-@media (max-width: 992px) {
+@media (max-width: 1040px) {
+  .couture-nav-menu { display: none; }
+  .mobile-toggle-couture { display: block; }
   .hero-editorial-grid { grid-template-columns: 1fr; gap: 3rem; }
   .hero-editorial-title { font-size: 3rem; }
   .atelier-pillars-grid, .blog-couture-grid { grid-template-columns: repeat(2, 1fr); }
   .footer-grid-couture { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 768px) {
-  .couture-nav-menu { display: none; }
-  .mobile-toggle-couture { display: block; }
   .hero-editorial-title { font-size: 2.4rem; }
   .atelier-pillars-grid, .blog-couture-grid { grid-template-columns: 1fr; }
   .workbench-controls-grid, .workbench-metrics-grid { grid-template-columns: 1fr; }
